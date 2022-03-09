@@ -11,5 +11,20 @@ before_install:
 script:
   - docker run -e CI=true bugrahan23/docker-react npm run test
 
-
-
+deploy:
+  provider: elasticbeanstalk #Provider in AWS
+  region: "turkey"  # The region telling where I am 
+  app: "docker"     # The app we are using to do that project
+  env: "Docker-env" # Specifying the name of the environment we are working wihtin
+  bucket_name: "elasticbeanstalk-turkey-30986.."  # We find it from the AWS files
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY # Can be found from AWS IAM management console
+  secret_access_key:  # Can be found from the same console
+    secure: "AWS_SECRET_KEY" # Both keys are stored in Travis CI in order 
+                             # to be checked when needed because now our git 
+                             # is public and if we just push the keys to our GitHub
+                             # everyone can see them which we dont want to.
+    
+    
